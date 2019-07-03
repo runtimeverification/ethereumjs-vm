@@ -301,14 +301,14 @@ module.exports = function (opts, cb) {
     });
   }
 
-  function computeGetBlockHash(query, cb) {
+  function computeGetBlockHash(query, _callback) {
     var getHashObject = query.getGetblockhash();
     var hash;
 
     var offset = getHashObject.getOffset();
     if (offset > 256 || offset < 0) {
       hash = new BN(0).toBuffer('le', 256);
-      cb(hash);
+      _callback(hash);
     } else {
       self.blockchain.getBlock(offset, function (err, block) {
         if (err) {
@@ -316,7 +316,7 @@ module.exports = function (opts, cb) {
         } else {
           hash = block.hash();
         }
-        cb(hash);
+        _callback(hash);
       });
     }
   }
