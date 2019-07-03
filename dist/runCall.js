@@ -307,12 +307,12 @@ module.exports = function (opts, cb) {
 
     var offset = getHashObject.getOffset();
     if (offset > 256 || offset < 0) {
-      hash = new BN(0).toBuffer("le", 256);
+      hash = new BN(0).toBuffer('le', 256);
       cb(hash);
     } else {
       self.blockchain.getBlock(offset, function (err, block) {
         if (err) {
-          hash = new BN(0).toBuffer("le", 256);
+          hash = new BN(0).toBuffer('le', 256);
         } else {
           hash = block.hash();
         }
