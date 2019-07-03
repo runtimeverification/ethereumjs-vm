@@ -89,19 +89,30 @@ module.exports = function (opts, cb) {
         case GETACCOUNT:
           {
             console.log('GETACCOUNT');
-            computeGetAccount(query);
+            computeGetAccount(query, function (fromAccount) {
+              var account = createAccount(fromAccount);
+              client.write(account);
+            });
             break;
           }
         case GETSTORAGEDATA:
           {
             console.log('GETSTORAGEDATA');
-            computeGetStorageData(query);
+            computeGetStorageData(query, function (value) {
+              var storageData = createStorageData(value.current);
+              client.write(storageData);
+            });
             break;
           }
         case GETCODE:
           {
             console.log('GETCODE');
-            computeGetCode(query);
+            computeGetCode(query, function (contractCode, compiled) {
+              isCompiled = compiled;
+              code = contractCode;
+              var message = createCode(code);
+              client.write(message);
+            });
             break;
           }
         case GETBLOCKHASH:
@@ -287,17 +298,14 @@ module.exports = function (opts, cb) {
     return logList;
   }
 
-  function computeGetCode(query) {
+  function computeGetCode(query, _callback) {
     var getCodeObject = query.getGetcode();
     var address = getCodeObject.getAddress();
     stateManager.getContractCode(Buffer.from(address), function (err, contractCode, compiled) {
       if (err) {
         console.log(err);
       }
-      isCompiled = compiled;
-      code = contractCode;
-      var message = createCode(code);
-      client.write(message);
+      _callback(contractCode, compiled);
     });
   }
 
@@ -321,7 +329,7 @@ module.exports = function (opts, cb) {
     }
   }
 
-  function computeGetStorageData(query) {
+  function computeGetStorageData(query, _callback) {
     var getStorageDataObject = query.getGetstoragedata();
     var address = getStorageDataObject.getAddress();
     var offset = getStorageDataObject.getOffset();
@@ -330,20 +338,18 @@ module.exports = function (opts, cb) {
       if (err) {
         console.log(err);
       }
-      var storageData = createStorageData(value.current);
-      client.write(storageData);
+      _callback(value);
     });
   }
 
-  function computeGetAccount(query) {
+  function computeGetAccount(query, _callback) {
     var getAccountObject = query.getGetaccount();
     var address = getAccountObject.getAddress();
     stateManager.getAccount(Buffer.from(address), function (err, fromAccount) {
-      var account = createAccount(fromAccount);
-      client.write(account);
       if (err) {
         console.log(err);
       }
+      _callback(fromAccount);
     });
   }
 
