@@ -38,12 +38,34 @@ distclean: clean
 node-prerequisites:
 	sudo apt-get install nodejs
 
+ganache:
+	npm install && \
+	protoc --js_out=import_style=commonjs,binary:. lib/proto/msg.proto && \
+	npm run build:dist && \
+	sudo npm link && \
+	cd deps/ganache-core && \
+	npm install && \
+	npm link ethereumjs-vm && \
+	npm run build && \
+	sudo npm link && \
+	cd ../ganache-cli && \
+	npm install && \
+	npm link ganache-core && \
+	npm run build && \
+	cd ../..
+
+erc20:
+	cd deps/openzeppelin-solidity && \
+	npm install && \
+	cd ../..
+
 deps:
 	node-prerequisites
 	git submodule update --init --recursive
 	$(KEVM_MAKE) deps llvm-deps
 	$(KEVM_MAKE) split-tests
 	cd $(KEVM_DEPS)/k && mvn package -DskipTests -U -Dhaskell.backend.skip
+
 
 # Regular Semantics Build
 # -----------------------

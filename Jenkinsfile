@@ -32,6 +32,20 @@ pipeline {
             '''
           }
         }
+        stage('Build Ganache with KEVM-VM') {
+            steps {
+                sh '''
+                  make ganace
+                '''
+            }
+        }
+        stage('Build OpenZeppelin-Solidity') {
+            steps {
+                sh '''
+                  make erc20
+                  '''
+            }
+        }
     }
   }
 }
