@@ -35,7 +35,7 @@ pipeline {
         stage('Build Ganache with KEVM-VM') {
             steps {
                 sh '''
-                  make ganace
+                  make ganache
                 '''
             }
         }
