@@ -47,5 +47,14 @@ pipeline {
             }
         }
     }
+    stage('Testing') {
+        stage('Total Supply test') {
+            steps {
+                sh '''
+                  node runtest.js
+                '''
+            }
+        }
+    }
   }
 }

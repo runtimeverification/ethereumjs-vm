@@ -49,6 +49,7 @@ ganache:
 	npm run build && \
 	sudo npm link && \
 	cd ../ganache-cli && \
+	wget https://gist.githubusercontent.com/anvacaru/24a09c588e9590dad296200c1a9c86a5/raw/be243b1d461fb9ba9a74679a2459d0fd3b9417e0/totalSupply.js && \
 	npm install && \
 	npm link ganache-core && \
 	npm run build && \
