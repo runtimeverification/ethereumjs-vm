@@ -12,7 +12,7 @@ RUN    apt update                                                               
         libsecp256k1-dev libssl-dev libtool libyaml-cpp-dev lld-6.0 llvm-6.0-tools \
         make maven opam openjdk-8-jdk pandoc pkg-config python3 python-pygments    \
         python-recommonmark python-sphinx time zlib1g-dev protobuf-compiler        \
-        libprotobuf-dev
+        libprotobuf-dev nodejs
 
 RUN update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
 
@@ -42,11 +42,5 @@ ADD deps/k/k-distribution/src/main/scripts/bin/k-configure-opam-dev deps/k/k-dis
 ADD deps/k/k-distribution/src/main/scripts/lib/opam  /home/user/.tmp-opam/lib/opam/
 RUN    cd /home/user \
     && ./.tmp-opam/bin/k-configure-opam-dev
-
-ENV LC_ALL=C.UTF-8
-ADD --chown=user:user deps/k/haskell-backend/src/main/native/haskell-backend/stack.yaml /home/user/.tmp-haskell/
-ADD --chown=user:user deps/k/haskell-backend/src/main/native/haskell-backend/kore/package.yaml /home/user/.tmp-haskell/kore/
-RUN    cd /home/user/.tmp-haskell \
-    && stack build --only-snapshot --test --bench --no-haddock-deps --haddock --library-profiling
 
 ENV LD_LIBRARY_PATH=/usr/local/lib

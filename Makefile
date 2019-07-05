@@ -35,9 +35,6 @@ clean:
 distclean: clean
 	rm -rf $(BUILD_DIR)
 
-node-prerequisites:
-	sudo apt-get install nodejs
-
 ganache:
 	npm install && \
 	protoc --js_out=import_style=commonjs,binary:. lib/proto/msg.proto && \
@@ -61,10 +58,8 @@ erc20:
 	cd ../..
 
 deps:
-	node-prerequisites
 	git submodule update --init --recursive
 	$(KEVM_MAKE) deps llvm-deps
-	$(KEVM_MAKE) split-tests
 	cd $(KEVM_DEPS)/k && mvn package -DskipTests -U -Dhaskell.backend.skip
 
 
