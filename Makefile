@@ -1,5 +1,5 @@
 
-.PHONY: clean distclean deps \
+.PHONY: clean distclean deps ganache erc20 rust\
         test-execute
 
 # Settings
@@ -62,7 +62,10 @@ deps:
 	$(KEVM_MAKE) deps llvm-deps
 	cd $(KEVM_DEPS)/k && mvn package -DskipTests -U -Dhaskell.backend.skip
 
-
+rust:
+	cd $(KEVM_SUBMODULE) && \
+	./deps/k/llvm-backend/src/main/native/llvm-backend/install-rust && \
+	cd ../..
 # Regular Semantics Build
 # -----------------------
 
