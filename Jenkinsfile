@@ -24,7 +24,7 @@ pipeline {
         '''
       }
     }
-    stage('Builds') {
+    stages('Builds') {
         stage('Build LLVM Node') {
           steps {
             sh '''
@@ -47,7 +47,7 @@ pipeline {
             }
         }
     }
-    stage('Testing') {
+    stages('Testing') {
         stage('Total Supply test') {
             steps {
                 sh '''
