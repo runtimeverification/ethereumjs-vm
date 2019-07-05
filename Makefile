@@ -63,7 +63,8 @@ deps:
 	cd $(KEVM_DEPS)/k && \
 	./llvm-backend/src/main/native/llvm-backend/install-rust && \
 	mvn package -DskipTests -U -Dhaskell.backend.skip && \
-	cd ../.. 
+	cd ../.. && \
+	$(KEVM_MAKE) build
 
 # Regular Semantics Build
 # -----------------------

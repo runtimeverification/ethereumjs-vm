@@ -27,7 +27,6 @@ pipeline {
     stage('Build LLVM Node') {
         steps {
         sh '''
-            make build-kevm
             make build-kevm-node
         '''
         }
