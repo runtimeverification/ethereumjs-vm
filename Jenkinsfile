@@ -24,36 +24,32 @@ pipeline {
         '''
       }
     }
-    stages('Builds') {
-        stage('Build LLVM Node') {
-          steps {
-            sh '''
-              make build-kevm-node
-            '''
-          }
-        }
-        stage('Build Ganache with KEVM-VM') {
-            steps {
-                sh '''
-                  make ganache
-                '''
-            }
-        }
-        stage('Build OpenZeppelin-Solidity') {
-            steps {
-                sh '''
-                  make erc20
-                  '''
-            }
+    stage('Build LLVM Node') {
+        steps {
+        sh '''
+            make build-kevm-node
+        '''
         }
     }
-    stages('Testing') {
-        stage('Total Supply test') {
-            steps {
-                sh '''
-                  node runtest.js
+    stage('Build Ganache with KEVM-VM') {
+        steps {
+            sh '''
+                make ganache
+            '''
+        }
+    }
+    stage('Build OpenZeppelin-Solidity') {
+        steps {
+            sh '''
+                make erc20
                 '''
-            }
+        }
+    }
+    stage('Total Supply test') {
+        steps {
+            sh '''
+                node runtest.js
+            '''
         }
     }
   }
