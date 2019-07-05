@@ -1,6 +1,6 @@
 
 .PHONY: clean distclean deps ganache erc20 \
-        test-execute
+        start-node start-ganache start-truffle-test
 
 # Settings
 # --------
@@ -36,35 +36,28 @@ distclean: clean
 	rm -rf $(BUILD_DIR)
 
 ganache:
-	npm install && \
-	protoc --js_out=import_style=commonjs,binary:. lib/proto/msg.proto && \
-	npm run build:dist && \
-	sudo npm link && \
+	npm install
+	protoc --js_out=import_style=commonjs,binary:. lib/proto/msg.proto 
+	npm run build:dist 
+	sudo npm link 
 	cd deps/ganache-core && \
 	npm install && \
 	npm link ethereumjs-vm && \
 	npm run build && \
-	sudo npm link && \
-	cd ../ganache-cli && \
-	wget https://gist.githubusercontent.com/anvacaru/24a09c588e9590dad296200c1a9c86a5/raw/be243b1d461fb9ba9a74679a2459d0fd3b9417e0/totalSupply.js && \
+	sudo npm link
+	cd deps/ganache-cli && \
 	npm install && \
 	npm link ganache-core && \
-	npm run build && \
-	cd ../..
+	npm run build
 
 erc20:
 	cd deps/openzeppelin-solidity && \
-	npm install && \
-	cd ../..
+	wget https://gist.githubusercontent.com/anvacaru/24a09c588e9590dad296200c1a9c86a5/raw/be243b1d461fb9ba9a74679a2459d0fd3b9417e0/totalSupply.js && \
+	npm install
 
 deps:
-	git submodule update --init --recursive && \
-	$(KEVM_MAKE) deps llvm-deps  && \
-	cd $(KEVM_DEPS)/k && \
-	./llvm-backend/src/main/native/llvm-backend/install-rust && \
-	mvn package -DskipTests -U -Dhaskell.backend.skip && \
-	cd ../.. && \
-	$(KEVM_MAKE) build
+	git submodule update --init --recursive
+	$(KEVM_MAKE) llvm-deps
 
 # Regular Semantics Build
 # -----------------------
@@ -72,24 +65,12 @@ deps:
 build-kevm-%:
 	$(KEVM_MAKE) build-$*
 
-# AOP Analysis Build
-# ------------------
+start-node:
+	$(KEVM_SUBMODULE)/.build/defn/vm/kevm-vm 8080 127.0.0.1 &
 
-build-analysis-%: $(DEFN_DIR)/%/kevm-analysis.k
-	$(KEVM_MAKE) build-$* MAIN_DEFN_FILE=kevm-analysis MAIN_MODULE=KEVM-ANALYSIS
+start-ganache:
+	node ./deps/ganache-cli/cli.js &
 
-$(DEFN_DIR)/%/kevm-analysis.k: kevm-analysis.md
-	@echo "==  tangle: $@"
-	mkdir -p $(dir $@)
-	pandoc --from markdown --to "$(TANGLER)" --metadata=code:'.k' $< > $@
-
-# Tests
-# =====
-
-execute_tests:=$(wildcard $(KEVM_SUBMODULE)/tests/ethereum-tests/VMTests/vmArithmeticTest/*.json)
-
-test-execute: $(execute_tests:=.test-execute)
-
-%.test-execute:
-	MODE=VMTESTS SCHEDULE=DEFAULT ./kevma EXECUTE $* > $*.out || true
-	git --no-pager diff --no-index tests/output/success.out $*.out
+start-truffle-test:
+	cd deps/openzeppelin-solidity && \
+	node node_modules/.bin/truffle test totalSupply.js

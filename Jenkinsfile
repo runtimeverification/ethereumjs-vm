@@ -24,7 +24,7 @@ pipeline {
         '''
       }
     }
-    stage('Build LLVM Node') {
+    stage('Build KEVM-VM') {
         steps {
         sh '''
             make build-kevm-node
@@ -45,10 +45,24 @@ pipeline {
                 '''
         }
     }
-    stage('Total Supply test') {
+    stage('Launch KEVM-VM') {
+      steps {
+          sh '''
+              make start-kevm
+          '''
+      }
+    }
+    stage('Launch Ganache-CLI') {
+      steps {
+          sh '''
+              make start-ganache
+          '''
+      }
+    }
+    stage('Run Truffle Test') {
         steps {
             sh '''
-                node runtest.js
+                make start-truffle-test
             '''
         }
     }
