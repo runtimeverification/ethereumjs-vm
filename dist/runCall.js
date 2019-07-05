@@ -90,8 +90,8 @@ module.exports = function (opts, cb) {
           {
             console.log('GETACCOUNT');
             computeGetAccount(query, function (fromAccount) {
-              var account = createAccount(fromAccount);
-              client.write(account);
+              var message = createAccount(fromAccount);
+              client.write(message);
             });
             break;
           }
@@ -99,8 +99,8 @@ module.exports = function (opts, cb) {
           {
             console.log('GETSTORAGEDATA');
             computeGetStorageData(query, function (value) {
-              var storageData = createStorageData(value.current);
-              client.write(storageData);
+              var message = createStorageData(value.current);
+              client.write(message);
             });
             break;
           }
@@ -119,11 +119,8 @@ module.exports = function (opts, cb) {
           {
             console.log('GETBLOCKHASH');
             computeGetBlockHash(query, function (hash) {
-              var blockhashObject = new msg_pb.Blockhash();
-              blockhashObject.setHash(hash);
-              var bytes = blockhashObject.serializeBinary();
-              var buffer = createBufferFromBytes(bytes);
-              client.write(buffer);
+              var message = createBlockhash(hash);
+              client.write(message);
             });
             break;
           }
@@ -151,8 +148,8 @@ module.exports = function (opts, cb) {
       console.log('CONNECTED TO: ' + kevmHost + ':' + kevmPort);
       var hello = createHello();
       client.write(hello);
-      var callCtx = createCallContext();
-      client.write(callCtx);
+      var message = createCallContext();
+      client.write(message);
     });
   }
 
@@ -359,6 +356,13 @@ module.exports = function (opts, cb) {
     var bytes = codeObject.serializeBinary();
     var buffer = createBufferFromBytes(bytes);
     return buffer;
+  }
+
+  function createBlockhash(hash) {
+    var blockhashObject = new msg_pb.Blockhash();
+    blockhashObject.setHash(hash);
+    var bytes = blockhashObject.serializeBinary();
+    return createBufferFromBytes(bytes);
   }
 
   function createStorageData(data) {
