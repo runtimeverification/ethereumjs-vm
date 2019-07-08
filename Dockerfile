@@ -34,12 +34,12 @@ RUN    groupadd --gid $GROUP_ID user                                        \
 
 USER $USER_ID:$GROUP_ID
 
-ADD --chown=user:user deps/k/llvm-backend/src/main/native/llvm-backend/install-rust deps/k/llvm-backend/src/main/native/llvm-backend/rust-checksum /home/user/.install-rust/
+ADD --chown=user:user deps/evm-semantics/deps/k/llvm-backend/src/main/native/llvm-backend/install-rust deps/evm-semantics/deps/k/llvm-backend/src/main/native/llvm-backend/rust-checksum /home/user/.install-rust/
 RUN    cd /home/user/.install-rust \
     && ./install-rust
 
-ADD deps/k/k-distribution/src/main/scripts/bin/k-configure-opam-dev deps/k/k-distribution/src/main/scripts/bin/k-configure-opam-common /home/user/.tmp-opam/bin/
-ADD deps/k/k-distribution/src/main/scripts/lib/opam  /home/user/.tmp-opam/lib/opam/
+ADD deps/evm-semantics/deps/k/k-distribution/src/main/scripts/bin/k-configure-opam-dev deps/evm-semantics/deps/k/k-distribution/src/main/scripts/bin/k-configure-opam-common /home/user/.tmp-opam/bin/
+ADD deps/evm-semantics/deps/k/k-distribution/src/main/scripts/lib/opam /home/user/.tmp-opam/lib/opam/
 RUN    cd /home/user \
     && ./.tmp-opam/bin/k-configure-opam-dev
 
