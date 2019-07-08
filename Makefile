@@ -29,7 +29,9 @@ export TANGLER
 export LUA_PATH
 
 NPM_PACKAGES="$(HOME)/.npm-packages"
+PATH="$(NPM_PACKAGES)/bin:$(PATH)"
 export NPM_PACKAGES
+export PATH
 
 clean:
 	rm -rf $(DEFN_DIR)
