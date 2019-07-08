@@ -10,9 +10,9 @@ RUN    apt update                                                               
         autoconf bison clang-6.0 cmake curl flex gcc libboost-test-dev             \
         libcrypto++-dev libffi-dev libjemalloc-dev libmpfr-dev libprocps-dev       \
         libsecp256k1-dev libssl-dev libtool libyaml-cpp-dev lld-6.0 llvm-6.0-tools \
-        make maven opam openjdk-8-jdk pandoc pkg-config python3 python-pygments    \
-        python-recommonmark python-sphinx time zlib1g-dev protobuf-compiler        \
-        libprotobuf-dev nodejs
+        make maven nodejs npm opam openjdk-8-jdk pandoc pkg-config python3         \
+        python-pygments python-recommonmark python-sphinx time zlib1g-dev          \
+        protobuf-compiler libprotobuf-dev
 
 RUN update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
 
