@@ -1,6 +1,5 @@
 
 .PHONY: clean distclean deps ganache erc20 \
-        start-node start-ganache start-truffle-test
 
 # Settings
 # --------
@@ -40,20 +39,19 @@ ganache:
 	protoc --js_out=import_style=commonjs,binary:. lib/proto/msg.proto 
 	npm run build:dist 
 	sudo npm link 
-	cd deps/ganache-core && \
-	npm install && \
-	npm link ethereumjs-vm && \
-	npm run build && \
-	sudo npm link
-	cd deps/ganache-cli && \
-	npm install && \
-	npm link ganache-core && \
-	npm run build
+	cd deps/ganache-core \
+		&& npm install \
+		&& npm link ethereumjs-vm \
+		&& npm run build \
+		&& sudo npm link
+	cd deps/ganache-cli \
+		&& npm install \
+		&& npm link ganache-core \
+		&& npm run build
 
 erc20:
-	cd deps/openzeppelin-solidity && \
-	wget https://gist.githubusercontent.com/anvacaru/24a09c588e9590dad296200c1a9c86a5/raw/be243b1d461fb9ba9a74679a2459d0fd3b9417e0/totalSupply.js && \
-	npm install
+	cd deps/openzeppelin-solidity \
+		&& npm install
 
 deps:
 	git submodule update --init --recursive
@@ -64,13 +62,3 @@ deps:
 
 build-kevm-%:
 	$(KEVM_MAKE) build-$*
-
-start-node:
-	$(KEVM_SUBMODULE)/.build/defn/vm/kevm-vm 8080 127.0.0.1 &
-
-start-ganache:
-	node ./deps/ganache-cli/cli.js &
-
-start-truffle-test:
-	cd deps/openzeppelin-solidity && \
-	node node_modules/.bin/truffle test totalSupply.js

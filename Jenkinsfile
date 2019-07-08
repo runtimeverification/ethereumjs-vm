@@ -48,21 +48,22 @@ pipeline {
     stage('Launch KEVM-VM') {
       steps {
           sh '''
-              make start-kevm
+              ./deps/evm-semantics/.build/defn/vm/kevm-vm 8080 127.0.0.1 &
           '''
       }
     }
     stage('Launch Ganache-CLI') {
       steps {
           sh '''
-              make start-ganache
+              node ./deps/ganache-cli/cli.js &
           '''
       }
     }
     stage('Run Truffle Test') {
         steps {
             sh '''
-                make start-truffle-test
+                cd ./deps/openzeppelin-solidity \
+                && node node_modules/bin/truffle test test/token/ERC20/ERC20.test.js
             '''
         }
     }
