@@ -62,8 +62,8 @@ pipeline {
     stage('Run Truffle Test') {
         steps {
             sh '''
-                cd ./deps/openzeppelin-solidity \
-                && node node_modules/bin/truffle test test/token/ERC20/ERC20.test.js
+                cd ./deps/openzeppelin-solidity
+                node node_modules/bin/truffle test test/token/ERC20/ERC20.test.js
             '''
         }
     }
