@@ -28,8 +28,8 @@ LUA_PATH:=$(PANDOC_TANGLE_SUBMODULE)/?.lua;;
 export TANGLER
 export LUA_PATH
 
-NPM_PACKAGES:="$(HOME)/.npm-packages"
-PATH:="$(NPM_PACKAGES)/bin:$(PATH)"
+NPM_PACKAGES:=$(HOME)/.npm-packages
+PATH:=$(NPM_PACKAGES)/bin:$(PATH)
 export NPM_PACKAGES
 export PATH
 
