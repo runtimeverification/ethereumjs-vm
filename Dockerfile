@@ -44,4 +44,4 @@ RUN    cd /home/user \
     && ./.tmp-opam/bin/k-configure-opam-dev
 
 ENV LD_LIBRARY_PATH=/usr/local/lib
-ENV PATH=/home/user/.local/bin:/home/user/.cargo/bin:$PATH 
+ENV PATH=/home/user/.local/bin:/home/user/.cargo/bin:$PATH
