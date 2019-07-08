@@ -20,7 +20,6 @@ pipeline {
       steps {
         sh '''
           make deps
-          make deps-npm
         '''
       }
     }
