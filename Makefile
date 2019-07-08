@@ -1,5 +1,5 @@
 
-.PHONY: clean distclean deps ganache erc20 \
+.PHONY: clean distclean deps deps-npm ganache erc20
 
 # Settings
 # --------
@@ -27,6 +27,9 @@ TANGLER:=$(PANDOC_TANGLE_SUBMODULE)/tangle.lua
 LUA_PATH:=$(PANDOC_TANGLE_SUBMODULE)/?.lua;;
 export TANGLER
 export LUA_PATH
+
+NPM_PACKAGES="$(HOME)/.npm-packages"
+export NPM_PACKAGES
 
 clean:
 	rm -rf $(DEFN_DIR)
@@ -56,6 +59,9 @@ erc20:
 deps:
 	git submodule update --init --recursive
 	$(KEVM_MAKE) llvm-deps
+
+deps-npm:
+	npm config set prefix "$(HOME)/.npm-packages"
 
 # Regular Semantics Build
 # -----------------------
