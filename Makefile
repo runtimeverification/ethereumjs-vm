@@ -36,22 +36,22 @@ distclean: clean
 
 ganache:
 	npm install
-	protoc --js_out=import_style=commonjs,binary:. lib/proto/msg.proto 
-	npm run build:dist 
-	sudo npm link 
-	cd deps/ganache-core \
-		&& npm install \
-		&& npm link ethereumjs-vm \
-		&& npm run build \
-		&& sudo npm link
-	cd deps/ganache-cli \
-		&& npm install \
-		&& npm link ganache-core \
-		&& npm run build
+	protoc --js_out=import_style=commonjs,binary:. lib/proto/msg.proto
+	npm run build:dist
+	npm link
+	cd deps/ganache-core          \
+	    && npm install            \
+	    && npm link ethereumjs-vm \
+	    && npm run build          \
+	    && npm link
+	cd deps/ganache-cli          \
+	    && npm install           \
+	    && npm link ganache-core \
+	    && npm run build
 
 erc20:
 	cd deps/openzeppelin-solidity \
-		&& npm install
+	    && npm install
 
 deps:
 	git submodule update --init --recursive
