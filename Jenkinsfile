@@ -61,14 +61,14 @@ pipeline {
     stage('Launch KEVM-VM') {
       steps {
         sh '''
-          ./deps/evm-semantics/.build/defn/vm/kevm-vm 8080 127.0.0.1 &
+          ./deps/evm-semantics/.build/defn/vm/kevm-vm 8080 127.0.0.1 &> kevm-vm.log &
         '''
       }
     }
     stage('Launch Ganache-CLI') {
       steps {
         sh '''
-          node ./deps/ganache-cli/cli.js &
+          node ./deps/ganache-cli/cli.js &> cli.log &
         '''
       }
     }
@@ -77,6 +77,8 @@ pipeline {
         sh '''
           cd ./deps/openzeppelin-solidity
           node node_modules/.bin/truffle test test/token/ERC20/ERC20.test.js
+          cat kevm-vm.log
+          cat cli.log
         '''
       }
     }
