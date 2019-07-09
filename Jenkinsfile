@@ -65,6 +65,12 @@ pipeline {
         sh '''
           cd ./deps/openzeppelin-solidity
           node node_modules/.bin/truffle test test/token/ERC20/ERC20.test.js
+        '''
+      }
+    }
+    stage('Cleanup') {
+      steps {
+        sh '''
           pkill node
           pkill kevm-vm
           cat kevm-vm.log
