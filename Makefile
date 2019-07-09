@@ -8,11 +8,11 @@ ANALYSIS_BACKEND=ocaml
 MAIN_MODULE:=KEVM-ANALYSIS
 MAIN_DEFN_FILE:=kevm-analysis
 
+BUILD_DIR:=.build
 DEPS_DIR:=deps
 DEFN_DIR:=$(BUILD_DIR)/defn
 KEVM_SUBMODULE:=$(DEPS_DIR)/evm-semantics
 KEVM_DEPS:=$(KEVM_SUBMODULE)/deps
-BUILD_DIR:=.build
 K_RELEASE:=$(KEVM_SUBMODULE)/deps/k/k-distribution/target/release/k
 K_BIN:=$(K_RELEASE)/bin
 K_LIB:=$(K_RELEASE)/lib
