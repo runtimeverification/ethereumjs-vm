@@ -28,6 +28,9 @@ LUA_PATH:=$(PANDOC_TANGLE_SUBMODULE)/?.lua;;
 export TANGLER
 export LUA_PATH
 
+GANACHE_CORE_SUBMODULE:=$(DEPS_DIR)/ganache-core
+GANACHE_CLI_SUBMODULE :=$(DEPS_DIR)/ganache-cli
+
 clean:
 	rm -rf $(DEFN_DIR)
 
@@ -35,16 +38,17 @@ distclean: clean
 	rm -rf $(BUILD_DIR)
 
 ganache:
+	git submodule update --init --recursive -- $(GANACHE_CORE_SUBMODULE) $(GANACHE_CLI_SUBMODULE)
 	npm install
 	protoc --js_out=import_style=commonjs,binary:. lib/proto/msg.proto
 	npm run build:dist
 	npm link
-	cd deps/ganache-core          \
+	cd $(GANACHE_CORE_SUBMODULE)  \
 	    && npm install            \
 	    && npm link ethereumjs-vm \
 	    && npm run build          \
 	    && npm link
-	cd deps/ganache-cli          \
+	cd $(GANACHE_CLI_SUBMODULE)  \
 	    && npm install           \
 	    && npm link ganache-core \
 	    && npm run build
