@@ -48,7 +48,7 @@ pipeline {
         script {
           try {
             sh '''
-              sudo make erc20
+              make erc20
             '''
           } catch (Exception e) {
             echo "Error detected, trying to continue.."
@@ -74,7 +74,7 @@ pipeline {
       steps {
         sh '''
           cd ./deps/openzeppelin-solidity
-          node node_modules/bin/truffle test test/token/ERC20/ERC20.test.js
+          node node_modules/.bin/truffle test test/token/ERC20/ERC20.test.js
         '''
       }
     }
