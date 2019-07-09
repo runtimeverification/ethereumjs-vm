@@ -32,9 +32,13 @@ pipeline {
     }
     stage('Build Ganache with KEVM-VM') {
       steps {
-        sh '''
-          make ganache
-        '''
+        try {
+          sh '''
+            make ganache
+          '''
+        } catch (Exception e) {
+          echo "Error detected, trying to continue.."
+        }
       }
     }
     stage('Build OpenZeppelin-Solidity') {
