@@ -32,18 +32,18 @@ pipeline {
     }
     stage('Build Ganache with KEVM-VM') {
       steps {
-            sh '''
-              make ganache || true
-            '''
+        sh '''
+          make ganache || true
+        '''
       }
     }
     stage('Build OpenZeppelin-Solidity') {
       steps {
-            sh '''
-              make erc20 || true
-              cd ./deps/openzeppelin-solidity
-              node node_modules/.bin/truffle compile
-            '''
+        sh '''
+          make erc20 || true
+          cd ./deps/openzeppelin-solidity
+          node node_modules/.bin/truffle compile
+        '''
       }
     }
     stage('Launch KEVM-VM') {
