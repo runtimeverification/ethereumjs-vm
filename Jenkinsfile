@@ -32,12 +32,14 @@ pipeline {
     }
     stage('Build Ganache with KEVM-VM') {
       steps {
-        try {
-          sh '''
-            make ganache
-          '''
-        } catch (Exception e) {
-          echo "Error detected, trying to continue.."
+        script {
+          try {
+            sh '''
+              make ganache
+            '''
+          } catch (Exception e) {
+            echo "Error detected, trying to continue.."
+          }
         }
       }
     }
