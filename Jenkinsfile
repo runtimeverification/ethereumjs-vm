@@ -32,30 +32,18 @@ pipeline {
     }
     stage('Build Ganache with KEVM-VM') {
       steps {
-        script {
-          try {
             sh '''
-              make ganache
+              make ganache || true
             '''
-          } catch (Exception e) {
-            echo "Error detected, trying to continue.."
-          }
-        }
       }
     }
     stage('Build OpenZeppelin-Solidity') {
       steps {
-        script {
-          try {
             sh '''
-              make erc20
+              make erc20 || true
               cd ./deps/openzeppelin-solidity
               node node_modules/.bin/truffle compile
             '''
-          } catch (Exception e) {
-            echo "Error detected, trying to continue.."
-          }
-        }
       }
     }
     stage('Launch KEVM-VM') {
@@ -77,6 +65,8 @@ pipeline {
         sh '''
           cd ./deps/openzeppelin-solidity
           node node_modules/.bin/truffle test test/token/ERC20/ERC20.test.js
+          pkill node
+          pkill kevm-vm
           cat kevm-vm.log
           cat cli.log
         '''
