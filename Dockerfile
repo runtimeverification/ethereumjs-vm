@@ -48,4 +48,4 @@ ENV PATH=/home/user/.local/bin:/home/user/.cargo/bin:$PATH
 
 ENV NPM_PACKAGES=$HOME/.npm-packages
 ENV PATH=$NPM_PACKAGES/bin:$PATH
-RUN npm config set prefix $HOME/.npm-packages
+RUN npm config set prefix $NPM_PACKAGES
