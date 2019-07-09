@@ -4,7 +4,8 @@
   "description": "An Ethereum VM implementation",
   "main": "dist/index.js",
   "files": [
-    "dist"
+    "dist",
+    "lib"
   ],
   "scripts": {
     "coverage": "nyc npm run coverageTests && nyc report --reporter=text-lcov > .nyc_output/lcov.info",
