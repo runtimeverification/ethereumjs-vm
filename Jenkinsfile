@@ -49,6 +49,8 @@ pipeline {
           try {
             sh '''
               make erc20
+              cd ./deps/openzeppelin-solidity
+              node node_modules/.bin/truffle compile
             '''
           } catch (Exception e) {
             echo "Error detected, trying to continue.."
