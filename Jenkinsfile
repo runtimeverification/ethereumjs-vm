@@ -48,7 +48,7 @@ pipeline {
         script {
           try {
             sh '''
-              make erc20
+              sudo make erc20
             '''
           } catch (Exception e) {
             echo "Error detected, trying to continue.."
