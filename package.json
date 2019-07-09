@@ -43,6 +43,8 @@
   "dependencies": {
     "async": "^2.1.2",
     "async-eventemitter": "^0.2.2",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
     "ethereumjs-account": "^2.0.3",
     "ethereumjs-block": "~2.2.0",
     "ethereumjs-blockchain": "^3.4.0",
@@ -50,14 +52,12 @@
     "ethereumjs-util": "^6.0.0",
     "fake-merkle-patricia-tree": "^1.0.1",
     "functional-red-black-tree": "^1.0.1",
+    "google-protobuf": "^3.6.0",
     "merkle-patricia-tree": "^2.3.2",
     "rustbn.js": "~0.2.0",
-    "safe-buffer": "^5.1.1",
-    "google-protobuf": "^3.6.0"
+    "safe-buffer": "^5.1.1"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
     "browserify": "^16.2.3",
     "coveralls": "^3.0.0",
     "documentation": "^8.1.2",
