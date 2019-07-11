@@ -73,6 +73,7 @@ pipeline {
         sh '''
           pkill node
           pkill kevm-vm
+          ls -la *.log
           cat kevm-vm.log
           cat cli.log
         '''
