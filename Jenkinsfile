@@ -49,14 +49,14 @@ pipeline {
     stage('Launch KEVM-VM') {
       steps {
         sh '''
-          ./deps/evm-semantics/.build/defn/vm/kevm-vm 8080 127.0.0.1 &> kevm-vm.log &
+          make run-kevm
         '''
       }
     }
     stage('Launch Ganache-CLI') {
       steps {
         sh '''
-          node ./deps/ganache-cli/cli.js &> cli.log &
+          make run-ganache
         '''
       }
     }

@@ -61,6 +61,12 @@ deps:
 	git submodule update --init --recursive
 	$(KEVM_MAKE) llvm-deps
 
+run-ganache:
+	node ./deps/ganache-cli/cli.js &> cli.log &
+
+run-kevm:
+	./deps/evm-semantics/.build/defn/vm/kevm-vm 8080 127.0.0.1 &> kevm-vm.log &
+
 # Regular Semantics Build
 # -----------------------
 
