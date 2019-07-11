@@ -42,15 +42,15 @@ ganache:
 	npm install
 	protoc --js_out=import_style=commonjs,binary:. lib/proto/msg.proto
 	npm run build:dist
-	npm link
 	cd $(GANACHE_CORE_SUBMODULE)  \
 	    && npm install            \
-	    && npm link ethereumjs-vm \
-	    && npm run build          \
-	    && npm link
+	    && rm -rf node_modules/ethereumjs-vm \
+		&& ln -s ../../ethereumjs-vm node_modules \
+	    && npm run build
 	cd $(GANACHE_CLI_SUBMODULE)  \
 	    && npm install           \
-	    && npm link ganache-core \
+	    && rm -rf node_modules/ganache-core \
+		&& ln -s ${GANACHE_CORE_SUBMODULE} node_modules \
 	    && npm run build
 
 erc20:
