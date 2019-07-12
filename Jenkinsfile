@@ -47,12 +47,12 @@ pipeline {
       }
     }
     stage('Launch KEVM-VM') {
-      script {
+      steps {
         KEVM_OUTPUT = sh(returnStdout: true, script: './deps/evm-semantics/.build/defn/vm/kevm-vm 8080 127.0.0.1')
       }
     }
     stage('Launch Ganache-CLI') {
-      script {
+      steps {
         CLI_OUTPUT = sh(returnStdout: true, script: 'node ./deps/ganache-cli/cli.js')
       }
     }
