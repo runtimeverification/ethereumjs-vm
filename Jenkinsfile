@@ -55,6 +55,7 @@ pipeline {
           node node_modules/.bin/truffle test test/token/ERC20/ERC20.test.js
           pkill node
           pkill kevm-vm
+          cd ../..
           cat kevm-vm.log
           cat cli.log
         '''
