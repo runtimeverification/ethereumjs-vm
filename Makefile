@@ -54,8 +54,7 @@ ganache:
 	    && npm run build
 
 erc20:
-	cd deps/openzeppelin-solidity \
-	    && npm install
+	npm install truffle
 
 deps:
 	git submodule update --init --recursive
