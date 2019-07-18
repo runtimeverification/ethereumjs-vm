@@ -51,6 +51,7 @@ ganache:
 	cd $(GANACHE_CLI_SUBMODULE)  \
 	    && npm install           \
 	    && npm link ganache-core \
+	-cd $(GANACHE_CLI_SUBMODULE)  \
 	    && npm run build
 
 erc20:
