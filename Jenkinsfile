@@ -49,7 +49,6 @@ pipeline {
     stage('Launch & Run') {
       steps {
         sh '''
-          ./deps/evm-semantics/.build/defn/vm/kevm-vm 8080 127.0.0.1 &
           node ./deps/ganache-cli/cli.js &
           cd ./deps/openzeppelin-solidity
           node node_modules/.bin/truffle test test/token/ERC20/ERC20.test.js
