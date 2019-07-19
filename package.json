@@ -1,7 +1,7 @@
 {
-  "name": "ethereumjs-vm",
-  "version": "3.0.0",
-  "description": "An Ethereum VM implementation",
+  "name": "kevm-ethereumjs-vm",
+  "version": "0.0.1",
+  "description": "The KEVM Ethereum VM implementation",
   "main": "dist/index.js",
   "files": [
     "dist",
@@ -35,10 +35,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ethereumjs/ethereumjs-vm.git"
+    "url": "git+https://github.com/runtimeverification/kevm-ethereumjs-vm.git"
   },
   "keywords": [
     "ethereum",
+    "KEVM",
     "VM"
   ],
   "dependencies": {
@@ -85,9 +86,6 @@
     "Alex Beregszaszi <alex@rtfs.hu>"
   ],
   "license": "MPL-2.0",
-  "bugs": {
-    "url": "https://github.com/ethereumjs/ethereumjs-vm/issues"
-  },
   "homepage": "https://github.com/ethereumjs/ethereumjs-vm",
   "nyc": {
     "exclude": [
