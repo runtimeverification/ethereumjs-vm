@@ -55,7 +55,7 @@ ganache:
 	    && npm run build
 
 erc20:
-	npm install truffle
+	npm install truffle chai
 
 deps:
 	git submodule update --init --recursive
