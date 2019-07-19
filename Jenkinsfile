@@ -23,13 +23,6 @@ pipeline {
         '''
       }
     }
-    stage('Run Linter') {
-      steps {
-        sh '''
-          npm run lint
-        '''
-      }
-    }
     stage('Build KEVM-VM') {
       steps {
         sh '''
@@ -41,6 +34,13 @@ pipeline {
       steps {
         sh '''
           make ganache || true
+        '''
+      }
+    }
+    stage('Run Linter') {
+      steps {
+        sh '''
+          npm run lint
         '''
       }
     }
