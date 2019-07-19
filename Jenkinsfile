@@ -23,6 +23,13 @@ pipeline {
         '''
       }
     }
+    stage('Run Linter') {
+      steps {
+        sh '''
+          npm run lint
+        '''
+      }
+    }
     stage('Build KEVM-VM') {
       steps {
         sh '''

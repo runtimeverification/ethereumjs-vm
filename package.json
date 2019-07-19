@@ -96,6 +96,8 @@
   },
   "standard": {
     "ignore": [
+      "deps/**",
+      ".build/**",
       "dist/**",
       "examples/runcode-browserify.js"
     ]
