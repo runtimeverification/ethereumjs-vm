@@ -49,11 +49,12 @@ ganache:
 	    && npm link
 	cd $(GANACHE_CLI_SUBMODULE)  \
 	    && npm install           \
-	    && npm link ganache-core \
+	    && npm link ganache-core
+	-cd $(GANACHE_CLI_SUBMODULE) \
 	    && npm run build
 
 erc20:
-	cd deps/openzeppelin-solidity \
+	-cd deps/openzeppelin-solidity \
 	    && npm install
 
 deps:
