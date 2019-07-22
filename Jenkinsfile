@@ -56,12 +56,9 @@ pipeline {
     stage('Launch & Run') {
       steps {
         sh '''
-          export PATH="$PATH:${WORKSPACE}/deps/evm-semantics/.build/defn/vm"
-          node ./deps/ganache-cli/cli.js &
-          cd ./deps/openzeppelin-solidity
-          node node_modules/.bin/truffle test test/token/ERC20/ERC20.test.js
-          pkill node
-          pkill kevm-vm
+          make start-vm
+          make test-openzeppelin
+          make stop-vm
         '''
       }
     }

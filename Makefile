@@ -61,6 +61,17 @@ deps:
 	git submodule update --init --recursive
 	$(KEVM_MAKE) llvm-deps
 
+start-vm:
+	PATH="$$PATH:$(shell pwd)/deps/evm-semantics/.build/defn/vm" node ./deps/ganache-cli/cli.js &
+
+stop-vm:
+	pkill node
+	pkill kevm-vm
+
+test-openzeppelin:
+	cd ./deps/openzeppelin-solidity \
+		&& node node_modules/.bin/truffle test test/token/ERC20/ERC20.test.js
+
 # Regular Semantics Build
 # -----------------------
 
