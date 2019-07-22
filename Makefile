@@ -43,13 +43,13 @@ ganache:
 	npm run build:dist
 	npm link
 	cd $(GANACHE_CORE_SUBMODULE)  \
-	    && npm install            \
 	    && npm link kevm-ethereumjs-vm \
+	    && npm install            \
 	    && npm run build          \
 	    && npm link
 	cd $(GANACHE_CLI_SUBMODULE)  \
-	    && npm install           \
 	    && npm link kevm-ganache-core
+	    && npm install           \
 	-cd $(GANACHE_CLI_SUBMODULE) \
 	    && npm run build
 
