@@ -33,7 +33,7 @@ pipeline {
     stage('Build Ganache with KEVM-VM') {
       steps {
         sh '''
-          make ganache || true
+          make ganache
         '''
       }
     }
@@ -47,7 +47,7 @@ pipeline {
     stage('Build OpenZeppelin-Solidity') {
       steps {
         sh '''
-          make erc20 || true
+          make erc20
           cd ./deps/openzeppelin-solidity
           node node_modules/.bin/truffle compile
         '''
@@ -56,7 +56,7 @@ pipeline {
     stage('Launch & Run') {
       steps {
         sh '''
-          ./deps/evm-semantics/.build/defn/vm/kevm-vm 8080 127.0.0.1 &
+          export PATH="$PATH:${WORKSPACE}/deps/evm-semantics/.build/defn/vm"
           node ./deps/ganache-cli/cli.js &
           cd ./deps/openzeppelin-solidity
           node node_modules/.bin/truffle test test/token/ERC20/ERC20.test.js

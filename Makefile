@@ -43,17 +43,18 @@ ganache:
 	npm run build:dist
 	npm link
 	cd $(GANACHE_CORE_SUBMODULE)  \
+	    && npm link kevm-ethereumjs-vm \
 	    && npm install            \
-	    && npm link ethereumjs-vm \
 	    && npm run build          \
 	    && npm link
 	cd $(GANACHE_CLI_SUBMODULE)  \
-	    && npm install           \
-	    && npm link ganache-core \
+	    && npm link kevm-ganache-core \
+	    && npm install
+	-cd $(GANACHE_CLI_SUBMODULE) \
 	    && npm run build
 
 erc20:
-	cd deps/openzeppelin-solidity \
+	-cd deps/openzeppelin-solidity \
 	    && npm install
 
 deps:
