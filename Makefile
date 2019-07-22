@@ -48,8 +48,8 @@ ganache:
 	    && npm run build          \
 	    && npm link
 	cd $(GANACHE_CLI_SUBMODULE)  \
-	    && npm link kevm-ganache-core
-	    && npm install           \
+	    && npm link kevm-ganache-core \
+	    && npm install
 	-cd $(GANACHE_CLI_SUBMODULE) \
 	    && npm run build
 
