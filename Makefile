@@ -1,5 +1,5 @@
 
-.PHONY: clean distclean deps ganache erc20
+.PHONY: clean distclean deps ganache erc20 start-vm stop-vm test-openzeppelin
 
 # Settings
 # --------
