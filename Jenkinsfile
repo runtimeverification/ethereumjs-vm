@@ -37,6 +37,13 @@ pipeline {
         '''
       }
     }
+    stage('Run Linter') {
+      steps {
+        sh '''
+          npm run lint
+        '''
+      }
+    }
     stage('Build OpenZeppelin-Solidity') {
       steps {
         sh '''
