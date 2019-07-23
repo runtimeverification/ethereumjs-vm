@@ -59,7 +59,7 @@ pipeline {
           export PATH="$PATH:${WORKSPACE}/deps/evm-semantics/.build/defn/vm"
           node ./deps/ganache-cli/cli.js &
           cd ./deps/openzeppelin-solidity
-          node node_modules/.bin/truffle test
+          truffle test
           pkill node
           pkill kevm-vm
         '''
