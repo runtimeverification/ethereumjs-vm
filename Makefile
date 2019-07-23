@@ -39,14 +39,11 @@ distclean: clean
 
 ganache:
 	git submodule update --init --recursive -- $(GANACHE_CORE_SUBMODULE) $(GANACHE_CLI_SUBMODULE)
-	npm install
-	npm run build:dist
 	npm link
 	cd $(GANACHE_CORE_SUBMODULE)  \
 	    && npm link kevm-ethereumjs-vm \
-	    && npm install            \
-	    && npm run build          \
-	    && npm link
+	    && npm link               \
+	    && npm run build
 	cd $(GANACHE_CLI_SUBMODULE)  \
 	    && npm link kevm-ganache-core \
 	    && npm install
