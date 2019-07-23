@@ -4,9 +4,9 @@ ENV TZ=America/Chicago
 RUN    ln --symbolic --no-dereference --force /usr/share/zoneinfo/$TZ /etc/localtime \
     && echo $TZ > /etc/timezone
 
-RUN    apt update                                                                 \
-    && apt upgrade --yes                                                          \
-    && apt install --yes                                                          \
+RUN    apt-get update                                                                 \
+    && apt-get upgrade --yes                                                          \
+    && apt-get install --yes                                                          \
         autoconf bison clang-6.0 cmake curl flex gcc libboost-test-dev            \
         libcrypto++-dev libffi-dev libjemalloc-dev libmpfr-dev libprocps-dev      \
         libsecp256k1-dev libssl1.0-dev libtool libyaml-dev lld-6.0 llvm-6.0-tools \
@@ -15,6 +15,8 @@ RUN    apt update                                                               
         protobuf-compiler libprotobuf-dev
 
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
+
+RUN apt-get intsall --yes nodejs
 
 RUN update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
 
