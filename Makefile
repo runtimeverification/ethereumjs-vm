@@ -50,12 +50,12 @@ ganache:
 	cd $(GANACHE_CLI_SUBMODULE)  \
 	    && npm link kevm-ganache-core \
 	    && npm install
-	-cd $(GANACHE_CLI_SUBMODULE) \
+	cd $(GANACHE_CLI_SUBMODULE) \
 	    && npm run build
 
 erc20:
 	npm install -g truffle
-	-cd deps/openzeppelin-solidity \
+	cd deps/openzeppelin-solidity \
 	    && npm install
 
 deps:
