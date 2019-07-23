@@ -7,6 +7,9 @@ pipeline {
   options {
     ansiColor('xterm')
   }
+  environment {
+    FIREFLY_DEBUG = 'true'
+  }
   stages {
     stage("Init title") {
       when { changeRequest() }
