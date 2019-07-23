@@ -48,7 +48,8 @@ ganache:
 	cd $(GANACHE_CLI_SUBMODULE)  \
 	    && npm link kevm-ganache-core \
 	    && npm install           \
-	    && npm link kevm-ganache-core \
+	    && npm link kevm-ganache-core
+	-cd $(GANACHE_CLI_SUBMODULE) \
 	    && npm run build
 
 erc20:
