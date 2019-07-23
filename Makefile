@@ -43,11 +43,12 @@ ganache:
 	cd $(GANACHE_CORE_SUBMODULE)  \
 	    && npm link kevm-ethereumjs-vm \
 	    && npm link               \
+	    && npm link kevm-ethereumjs-vm \
 	    && npm run build
 	cd $(GANACHE_CLI_SUBMODULE)  \
 	    && npm link kevm-ganache-core \
-	    && npm install
-	cd $(GANACHE_CLI_SUBMODULE) \
+	    && npm install           \
+	    && npm link kevm-ganache-core \
 	    && npm run build
 
 erc20:
