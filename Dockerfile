@@ -16,7 +16,7 @@ RUN    apt-get update                                                           
 
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
 
-RUN apt-get intsall --yes nodejs
+RUN apt-get install --yes nodejs
 
 RUN update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
 
