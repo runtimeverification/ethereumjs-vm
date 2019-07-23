@@ -57,10 +57,17 @@ erc20:
 	npm install -g truffle
 	cd deps/openzeppelin-solidity \
 	    && npm install
+	cd deps/openzeppelin-solidity/node_modules/.bin \
+		&& rm ganache-cli \
+		&& ln -s ../../../ganache-cli/cli.js ganache-cli
 
 deps:
 	git submodule update --init --recursive
 	$(KEVM_MAKE) llvm-deps
+
+test-openzeppelin:
+	cd ./deps/openzeppelin-solidity \
+		&& npm run test
 
 # Regular Semantics Build
 # -----------------------

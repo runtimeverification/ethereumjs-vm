@@ -53,15 +53,10 @@ pipeline {
         '''
       }
     }
-    stage('Launch & Run') {
+    stage('Launch & Run Openzeppelin') {
       steps {
         sh '''
-          export PATH="$PATH:${WORKSPACE}/deps/evm-semantics/.build/defn/vm"
-          node ./deps/ganache-cli/cli.js &
-          cd ./deps/openzeppelin-solidity
-          truffle test
-          pkill node
-          pkill kevm-vm
+          make test-openzeppelin
         '''
       }
     }
