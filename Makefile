@@ -1,5 +1,5 @@
 
-.PHONY: clean distclean deps ganache erc20
+.PHONY: clean distclean deps ganache erc20 start-vm stop-vm test-openzeppelin
 
 # Settings
 # --------
@@ -31,6 +31,9 @@ export LUA_PATH
 GANACHE_CORE_SUBMODULE:=$(DEPS_DIR)/ganache-core
 GANACHE_CLI_SUBMODULE :=$(DEPS_DIR)/ganache-cli
 
+PATH:=$(PATH):$(CURDIR)/deps/evm-semantics/.build/defn/vm
+export PATH
+
 clean:
 	rm -rf $(DEFN_DIR)
 
@@ -60,6 +63,17 @@ erc20:
 deps:
 	git submodule update --init --recursive
 	$(KEVM_MAKE) llvm-deps
+
+start-vm:
+	node ./deps/ganache-cli/cli.js $(CLIARGS) &
+
+stop-vm:
+	pkill node
+	pkill kevm-vm
+
+test-openzeppelin:
+	cd ./deps/openzeppelin-solidity \
+		&& node node_modules/.bin/truffle test test/token/ERC20/ERC20.test.js
 
 # Regular Semantics Build
 # -----------------------
