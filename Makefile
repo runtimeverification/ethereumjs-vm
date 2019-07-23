@@ -31,6 +31,9 @@ export LUA_PATH
 GANACHE_CORE_SUBMODULE:=$(DEPS_DIR)/ganache-core
 GANACHE_CLI_SUBMODULE :=$(DEPS_DIR)/ganache-cli
 
+PATH:=$(PATH):$(CURDIR)/deps/evm-semantics/.build/defn/vm
+export PATH
+
 clean:
 	rm -rf $(DEFN_DIR)
 
@@ -62,7 +65,7 @@ deps:
 	$(KEVM_MAKE) llvm-deps
 
 start-vm:
-	PATH="$$PATH:$(shell pwd)/deps/evm-semantics/.build/defn/vm" node ./deps/ganache-cli/cli.js &
+	node ./deps/ganache-cli/cli.js $(CLIARGS) &
 
 stop-vm:
 	pkill node
