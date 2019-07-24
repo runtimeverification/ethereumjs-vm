@@ -42,27 +42,29 @@ distclean: clean
 
 ganache:
 	git submodule update --init --recursive -- $(GANACHE_CORE_SUBMODULE) $(GANACHE_CLI_SUBMODULE)
-	npm install
-	npm run build:dist
 	npm link
 	cd $(GANACHE_CORE_SUBMODULE)  \
 	    && npm link kevm-ethereumjs-vm \
-	    && npm install            \
-	    && npm run build          \
-	    && npm link
+	    && npm link               \
+	    && npm link kevm-ethereumjs-vm \
+	    && npm run build
 	cd $(GANACHE_CLI_SUBMODULE)  \
 	    && npm link kevm-ganache-core \
-	    && npm install
+	    && npm install           \
+	    && npm link kevm-ganache-core
 	-cd $(GANACHE_CLI_SUBMODULE) \
 	    && npm run build
 
 erc20:
-	-cd deps/openzeppelin-solidity \
+	npm install -g truffle
+	cd deps/openzeppelin-solidity \
 	    && npm install
 
 deps:
 	git submodule update --init --recursive
 	$(KEVM_MAKE) llvm-deps
+
+CLIARGS=--gasLimit 0xfffffffffff --port 8545 --account=0x2bdd21761a483f71054e14f5b827213567971c676928d9a1808cbfa4b7501200,1000000000000000000000000 --account=0x2bdd21761a483f71054e14f5b827213567971c676928d9a1808cbfa4b7501201,1000000000000000000000000 --account=0x2bdd21761a483f71054e14f5b827213567971c676928d9a1808cbfa4b7501202,1000000000000000000000000 --account=0x2bdd21761a483f71054e14f5b827213567971c676928d9a1808cbfa4b7501203,1000000000000000000000000 --account=0x2bdd21761a483f71054e14f5b827213567971c676928d9a1808cbfa4b7501204,1000000000000000000000000 --account=0x2bdd21761a483f71054e14f5b827213567971c676928d9a1808cbfa4b7501205,1000000000000000000000000 --account=0x2bdd21761a483f71054e14f5b827213567971c676928d9a1808cbfa4b7501206,1000000000000000000000000 --account=0x2bdd21761a483f71054e14f5b827213567971c676928d9a1808cbfa4b7501207,1000000000000000000000000 --account=0x2bdd21761a483f71054e14f5b827213567971c676928d9a1808cbfa4b7501208,1000000000000000000000000 --account=0x2bdd21761a483f71054e14f5b827213567971c676928d9a1808cbfa4b7501209,1000000000000000000000000
 
 start-vm:
 	node ./deps/ganache-cli/cli.js $(CLIARGS) &
@@ -73,7 +75,7 @@ stop-vm:
 
 test-openzeppelin:
 	cd ./deps/openzeppelin-solidity \
-		&& node node_modules/.bin/truffle test test/token/ERC20/ERC20.test.js
+		&& truffle test
 
 # Regular Semantics Build
 # -----------------------

@@ -52,7 +52,7 @@ pipeline {
         sh '''
           make erc20
           cd ./deps/openzeppelin-solidity
-          node node_modules/.bin/truffle compile
+          truffle compile
         '''
       }
     }
