@@ -41,19 +41,21 @@ distclean: clean
 	rm -rf $(BUILD_DIR)
 
 ganache:
+	npm install -g yarn
 	git submodule update --init --recursive -- $(GANACHE_CORE_SUBMODULE) $(GANACHE_CLI_SUBMODULE)
-	npm link
+	yarn install
+	yarn link
+	yarn run build:dist
 	cd $(GANACHE_CORE_SUBMODULE)  \
-	    && npm link kevm-ethereumjs-vm \
-	    && npm link               \
-	    && npm link kevm-ethereumjs-vm \
-	    && npm run build
+		&& yarn install \
+		&& yarn link kevm-ethereumjs-vm \
+		&& yarn link \
+		&& yarn run build
 	cd $(GANACHE_CLI_SUBMODULE)  \
-	    && npm link kevm-ganache-core \
-	    && npm install           \
-	    && npm link kevm-ganache-core
-	-cd $(GANACHE_CLI_SUBMODULE) \
-	    && npm run build
+		&& yarn install \
+		&& yarn link kevm-ganache-core
+	cd $(GANACHE_CLI_SUBMODULE) \
+		&& yarn run build
 
 erc20:
 	npm install -g truffle
@@ -67,7 +69,7 @@ deps:
 CLIARGS=--gasLimit 0xfffffffffff --port 8545 --account=0x2bdd21761a483f71054e14f5b827213567971c676928d9a1808cbfa4b7501200,1000000000000000000000000 --account=0x2bdd21761a483f71054e14f5b827213567971c676928d9a1808cbfa4b7501201,1000000000000000000000000 --account=0x2bdd21761a483f71054e14f5b827213567971c676928d9a1808cbfa4b7501202,1000000000000000000000000 --account=0x2bdd21761a483f71054e14f5b827213567971c676928d9a1808cbfa4b7501203,1000000000000000000000000 --account=0x2bdd21761a483f71054e14f5b827213567971c676928d9a1808cbfa4b7501204,1000000000000000000000000 --account=0x2bdd21761a483f71054e14f5b827213567971c676928d9a1808cbfa4b7501205,1000000000000000000000000 --account=0x2bdd21761a483f71054e14f5b827213567971c676928d9a1808cbfa4b7501206,1000000000000000000000000 --account=0x2bdd21761a483f71054e14f5b827213567971c676928d9a1808cbfa4b7501207,1000000000000000000000000 --account=0x2bdd21761a483f71054e14f5b827213567971c676928d9a1808cbfa4b7501208,1000000000000000000000000 --account=0x2bdd21761a483f71054e14f5b827213567971c676928d9a1808cbfa4b7501209,1000000000000000000000000
 
 start-vm:
-	node ./deps/ganache-cli/cli.js $(CLIARGS) &
+	node ./deps/ganache-cli/build/kevm-ganache-core.node.cli.js $(CLIARGS) &
 
 stop-vm:
 	pkill node
