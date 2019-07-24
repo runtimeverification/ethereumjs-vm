@@ -62,6 +62,8 @@ deps:
 	git submodule update --init --recursive
 	$(KEVM_MAKE) llvm-deps
 
+CLIARGS?=
+
 start-vm:
 	node ./deps/ganache-cli/cli.js $(CLIARGS) &
 
