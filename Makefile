@@ -1,5 +1,5 @@
 
-.PHONY: clean distclean deps ganache erc20
+.PHONY: clean distclean deps ganache erc20 start-vm stop-vm test-openzeppelin
 
 # Settings
 # --------
@@ -31,6 +31,9 @@ export LUA_PATH
 GANACHE_CORE_SUBMODULE:=$(DEPS_DIR)/ganache-core
 GANACHE_CLI_SUBMODULE :=$(DEPS_DIR)/ganache-cli
 
+PATH:=$(PATH):$(CURDIR)/deps/evm-semantics/.build/defn/vm
+export PATH
+
 clean:
 	rm -rf $(DEFN_DIR)
 
@@ -60,6 +63,19 @@ erc20:
 deps:
 	git submodule update --init --recursive
 	$(KEVM_MAKE) llvm-deps
+
+CLIARGS=--gasLimit 0xfffffffffff --port 8545 --account=0x2bdd21761a483f71054e14f5b827213567971c676928d9a1808cbfa4b7501200,1000000000000000000000000 --account=0x2bdd21761a483f71054e14f5b827213567971c676928d9a1808cbfa4b7501201,1000000000000000000000000 --account=0x2bdd21761a483f71054e14f5b827213567971c676928d9a1808cbfa4b7501202,1000000000000000000000000 --account=0x2bdd21761a483f71054e14f5b827213567971c676928d9a1808cbfa4b7501203,1000000000000000000000000 --account=0x2bdd21761a483f71054e14f5b827213567971c676928d9a1808cbfa4b7501204,1000000000000000000000000 --account=0x2bdd21761a483f71054e14f5b827213567971c676928d9a1808cbfa4b7501205,1000000000000000000000000 --account=0x2bdd21761a483f71054e14f5b827213567971c676928d9a1808cbfa4b7501206,1000000000000000000000000 --account=0x2bdd21761a483f71054e14f5b827213567971c676928d9a1808cbfa4b7501207,1000000000000000000000000 --account=0x2bdd21761a483f71054e14f5b827213567971c676928d9a1808cbfa4b7501208,1000000000000000000000000 --account=0x2bdd21761a483f71054e14f5b827213567971c676928d9a1808cbfa4b7501209,1000000000000000000000000
+
+start-vm:
+	node ./deps/ganache-cli/cli.js $(CLIARGS) &
+
+stop-vm:
+	pkill node
+	pkill kevm-vm
+
+test-openzeppelin:
+	cd ./deps/openzeppelin-solidity \
+		&& truffle test
 
 # Regular Semantics Build
 # -----------------------
