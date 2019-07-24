@@ -41,19 +41,21 @@ distclean: clean
 	rm -rf $(BUILD_DIR)
 
 ganache:
+	npm install -g yarn
 	git submodule update --init --recursive -- $(GANACHE_CORE_SUBMODULE) $(GANACHE_CLI_SUBMODULE)
-	npm link
+	yarn install --non-interactive
+	yarn link
+	yarn run build:dist
 	cd $(GANACHE_CORE_SUBMODULE)  \
-	    && npm link kevm-ethereumjs-vm \
-	    && npm link               \
-	    && npm link kevm-ethereumjs-vm \
-	    && npm run build
+		&& yarn link kevm-ethereumjs-vm \
+		&& yarn install --non-interactive \
+		&& yarn link \
+		&& yarn run build
 	cd $(GANACHE_CLI_SUBMODULE)  \
-	    && npm link kevm-ganache-core \
-	    && npm install           \
-	    && npm link kevm-ganache-core
-	-cd $(GANACHE_CLI_SUBMODULE) \
-	    && npm run build
+		&& yarn link kevm-ganache-core \
+		&& yarn install --non-interactive
+	cd $(GANACHE_CLI_SUBMODULE) \
+		&& yarn run build
 
 erc20:
 	npm install -g truffle
