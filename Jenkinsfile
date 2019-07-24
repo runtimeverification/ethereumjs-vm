@@ -47,22 +47,35 @@ pipeline {
         '''
       }
     }
-    stage('Build OpenZeppelin-Solidity') {
+    stage('Install Truffle') {
       steps {
         sh '''
-          make erc20
-          cd ./deps/openzeppelin-solidity
-          truffle compile
+          make truffle
         '''
       }
     }
     stage('Launch & Run') {
-      steps {
-        sh '''
-          make start-vm
-          make test-openzeppelin
-          make stop-vm
-        '''
+      stages {
+        stage('Run OpenZeppelin-Solidity') {
+          steps {
+            sh '''
+              make start-vm CLIARGS="--gasLimit 0xfffffffffff --port 8545 --account=0x2bdd21761a483f71054e14f5b827213567971c676928d9a1808cbfa4b7501200,1000000000000000000000000 --account=0x2bdd21761a483f71054e14f5b827213567971c676928d9a1808cbfa4b7501201,1000000000000000000000000 --account=0x2bdd21761a483f71054e14f5b827213567971c676928d9a1808cbfa4b7501202,1000000000000000000000000 --account=0x2bdd21761a483f71054e14f5b827213567971c676928d9a1808cbfa4b7501203,1000000000000000000000000 --account=0x2bdd21761a483f71054e14f5b827213567971c676928d9a1808cbfa4b7501204,1000000000000000000000000 --account=0x2bdd21761a483f71054e14f5b827213567971c676928d9a1808cbfa4b7501205,1000000000000000000000000 --account=0x2bdd21761a483f71054e14f5b827213567971c676928d9a1808cbfa4b7501206,1000000000000000000000000 --account=0x2bdd21761a483f71054e14f5b827213567971c676928d9a1808cbfa4b7501207,1000000000000000000000000 --account=0x2bdd21761a483f71054e14f5b827213567971c676928d9a1808cbfa4b7501208,1000000000000000000000000 --account=0x2bdd21761a483f71054e14f5b827213567971c676928d9a1808cbfa4b7501209,1000000000000000000000000"
+              git clone https://github.com/openzeppelin/openzeppelin-solidity.git
+              cd openzeppelin-solidity && npm install && truffle test
+              cd .. && make stop-vm
+            '''
+          }
+        }
+        stage('Run Archanova-Abridged') {
+          steps {
+            sh '''
+              make start-vm CLIARGS="-p 8555 --gasLimit 0xfffffffffff -e 1000000"
+              git clone https://github.com/netgum/archanova-contracts.git
+              cd archanova-contracts && npm install && truffle test
+              cd .. && make stop-vm
+            '''
+          }
+        }
       }
     }
   }

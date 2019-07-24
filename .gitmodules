@@ -7,6 +7,3 @@
 [submodule "deps/ganache-cli"]
 	path = deps/ganache-cli
 	url = https://github.com/runtimeverification/ganache-cli.git
-[submodule "deps/openzeppelin-solidity"]
-	path = deps/openzeppelin-solidity
-	url = https://github.com/openzeppelin/openzeppelin-solidity.git
