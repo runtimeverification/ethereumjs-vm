@@ -72,7 +72,7 @@ pipeline {
             sh '''
               git clone https://github.com/netgum/archanova-contracts.git
               cd archanova-contracts && npm install
-              cd .. && make start-vm CLIARGS="--gasLimit 0xfffffffffff -e 1000000"
+              cd .. && make start-vm CLIARGS="-p 8555 --gasLimit 0xfffffffffff -e 1000000"
               cd archanova-contracts && truffle test
               cd .. && make stop-vm
             '''
