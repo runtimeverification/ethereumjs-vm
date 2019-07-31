@@ -26,10 +26,16 @@ pipeline {
         '''
       }
     }
-    stage('Build KEVM-VM') {
+    stage('Download KEVM-VM') {
       steps {
         sh '''
-          make build-kevm-node
+          jq_query='[.[] | select(any(.tag_name; test("^v1.0.0-*")))][0]'  # select released tags
+          jq_query="$jq_query"' | .assets[]'                               # browse packages
+          jq_query="$jq_query"' | select(any(.label; test("Ubuntu *")))'   # select Debian package
+          jq_query="$jq_query"' | .browser_download_url'                   # get download url
+          release_url="$(curl 'https://api.github.com/repos/kframework/evm-semantics/releases' | jq --raw-output "$jq_query")"
+          curl --location "$release_url" --output kevm_1.0.0_amd64.deb
+          sudo apt install ./kevm_1.0.0_amd64.deb
         '''
       }
     }
