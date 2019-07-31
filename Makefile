@@ -35,6 +35,7 @@ deps:
 CLIARGS?=
 
 start-vm:
+	which kevm-vm
 	node ./deps/ganache-cli/cli.js $(CLIARGS) &
 
 stop-vm:
