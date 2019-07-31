@@ -36,7 +36,7 @@ CLIARGS?=
 
 start-vm:
 	ls /usr/bin \
-		&& echo $PATH
+		&& echo $$PATH
 	node ./deps/ganache-cli/cli.js $(CLIARGS) &
 
 stop-vm:
