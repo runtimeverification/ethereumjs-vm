@@ -14,6 +14,14 @@ RUN    apt-get update                                                           
         python3 python-pygments python-recommonmark python-sphinx time zlib1g-dev \
         protobuf-compiler libprotobuf-dev jq
 
+RUN jq_query='[.[] | select(any(.tag_name; test("^v1.0.0-*")))][0]'  # select released tags \
+    && jq_query="$jq_query"' | .assets[]'                               # browse packages \
+    && jq_query="$jq_query"' | select(any(.label; test("Ubuntu *")))'   # select Debian package \
+    && jq_query="$jq_query"' | .browser_download_url'                   # get download url \
+    && release_url="$(curl 'https://api.github.com/repos/kframework/evm-semantics/releases' | jq --raw-output "$jq_query")" \
+    && curl --location "$release_url" --output kevm_1.0.0_amd64.deb \
+    && apt install --yes ./kevm_1.0.0_amd64.deb
+
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
 
 RUN apt-get install --yes nodejs
@@ -33,11 +41,3 @@ ENV PATH=/home/user/.local/bin:/home/user/.cargo/bin:$PATH
 ENV NPM_PACKAGES=/home/user/.npm-packages
 ENV PATH=$NPM_PACKAGES/bin:$PATH
 RUN npm config set prefix $NPM_PACKAGES
-
-RUN jq_query='[.[] | select(any(.tag_name; test("^v1.0.0-*")))][0]'  # select released tags \
-    && jq_query="$jq_query"' | .assets[]'                               # browse packages \
-    && jq_query="$jq_query"' | select(any(.label; test("Ubuntu *")))'   # select Debian package \
-    && jq_query="$jq_query"' | .browser_download_url'                   # get download url \
-    && release_url="$(curl 'https://api.github.com/repos/kframework/evm-semantics/releases' | jq --raw-output "$jq_query")" \
-    && curl --location "$release_url" --output kevm_1.0.0_amd64.deb \
-    && apt install --yes ./kevm_1.0.0_amd64.deb
