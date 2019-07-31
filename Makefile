@@ -36,6 +36,8 @@ CLIARGS?=
 
 start-vm:
 	which kevm-vm
+	ls usr/bin
+	echo $PATH
 	node ./deps/ganache-cli/cli.js $(CLIARGS) &
 
 stop-vm:
