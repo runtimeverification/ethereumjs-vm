@@ -4,6 +4,11 @@
 # Settings
 # --------
 
+DEPS_DIR:=deps
+
+GANACHE_CORE_SUBMODULE:=$(DEPS_DIR)/ganache-core
+GANACHE_CLI_SUBMODULE :=$(DEPS_DIR)/ganache-cli
+
 ganache:
 	npm install -g yarn
 	git submodule update --init --recursive -- $(GANACHE_CORE_SUBMODULE) $(GANACHE_CLI_SUBMODULE)
