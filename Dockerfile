@@ -28,6 +28,7 @@ RUN    groupadd --gid $GROUP_ID user                                        \
 USER $USER_ID:$GROUP_ID
 
 ENV LD_LIBRARY_PATH=/usr/local/lib
+ENV PATH=/home/user/.local/bin:/home/user/.cargo/bin:$PATH
 
 ENV NPM_PACKAGES=/home/user/.npm-packages
 ENV PATH=$NPM_PACKAGES/bin:$PATH
