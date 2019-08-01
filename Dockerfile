@@ -1,5 +1,7 @@
 FROM runtimeverificationinc/ubuntu:bionic
 
+ENV TZ=America/Chicago
+
 RUN    apt-get update                                                         \
     && apt-get upgrade --yes                                                  \
     && apt-get install --yes                                                  \
