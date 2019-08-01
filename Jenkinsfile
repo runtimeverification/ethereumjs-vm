@@ -47,13 +47,6 @@ pipeline {
         '''
       }
     }
-    stage('Install Truffle') {
-      steps {
-        sh '''
-          make truffle
-        '''
-      }
-    }
     stage('Launch & Run') {
       stages {
         stage('Run OpenZeppelin-Solidity') {

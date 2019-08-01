@@ -56,9 +56,6 @@ ganache:
 	cd $(GANACHE_CLI_SUBMODULE) \
 		&& yarn run build
 
-truffle:
-	npm install -g truffle
-
 deps:
 	git submodule update --init --recursive
 	$(KEVM_MAKE) llvm-deps
