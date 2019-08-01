@@ -41,7 +41,6 @@ distclean: clean
 	rm -rf $(BUILD_DIR)
 
 ganache:
-	npm install -g yarn
 	git submodule update --init --recursive -- $(GANACHE_CORE_SUBMODULE) $(GANACHE_CLI_SUBMODULE)
 	yarn install --non-interactive
 	yarn link
