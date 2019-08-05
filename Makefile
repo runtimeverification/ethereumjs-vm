@@ -58,7 +58,6 @@ ganache:
 
 deps:
 	git submodule update --init --recursive
-	$(KEVM_MAKE) llvm-deps
 
 CLIARGS?=
 
