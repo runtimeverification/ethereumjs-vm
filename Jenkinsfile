@@ -58,14 +58,14 @@ pipeline {
         stage('Run OpenZeppelin-Solidity') {
           steps {
             sh '''
-              runtest.sh $(sed -n 1p tests.txt)
+              ./runtest.sh $(sed -n 1p tests.txt)
             '''
           }
         }
         stage('Run Archanova-Abridged') {
           steps {
             sh '''
-              runtest.sh $(sed -n 2p tests.txt)
+              ./runtest.sh $(sed -n 2p tests.txt)
             '''
           }
         }
