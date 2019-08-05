@@ -1,5 +1,5 @@
 
-.PHONY: deps ganache erc20 start-vm stop-vm test-openzeppelin
+.PHONY: deps ganache erc20
 
 # Settings
 # --------
@@ -27,16 +27,3 @@ ganache:
 
 deps:
 	git submodule update --init --recursive
-
-CLIARGS?=
-
-start-vm:
-	node ./deps/ganache-cli/cli.js $(CLIARGS) &
-
-stop-vm:
-	pkill node
-
-test-openzeppelin:
-	cd ./deps/openzeppelin-solidity \
-		&& truffle test
-
